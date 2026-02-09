@@ -1,6 +1,8 @@
 #include <gb/gb.h>
 #include <stdint.h>
 
+#include "input.c"
+
 // . Color 0: 00 - 00000000 - Light
 // + Color 1: FF - 11111111 - Light Gray
 // * Color 2: AA - 10101010 - Dark Gray
@@ -25,14 +27,12 @@ const uint8_t smiley_tile[16] = {
     0x7E, 0x7E
 };
 
-// # # # # # # # # -> 3333 3333 -> 11 11 11 11 11 11 11 11 -> 55 55
-// # . . # # . . # -> 3003 3003 -> 11 00 00 11 11 00 00 11 -> 
-// # . . # # . . # -> 3003 3003 -> 11 00 00 11 11 00 00 11 -> 
-// # # # # # # # # -> 3333 3333 -> 11 11 11 11 11 11 11 11 -> 
-// # . # # # # . # -> 3033 3303 -> 11 00 11 11 11 11 00 11 -> 
-// # # . . . . # # -> 3300 0033 -> 11 11 00 00 00 00 11 11 -> 
-// # # # # # # # # -> 3333 3333 -> 11 11 11 11 11 11 11 11 -> 55 55
-// # # # # # # # # -> 3333 3333 -> 11 11 11 11 11 11 11 11 -> 55 55
+// 0: Nothing
+// 1: Up
+// 2: Down
+// 3: Left
+// 4: Right
+int8_t last_input_movements = 0;
 
 void main(void) {
     DISPLAY_OFF; // turn off screen, free VRAM / make changes safe
@@ -48,10 +48,22 @@ void main(void) {
     while(1) {
         uint8_t keys = joypad();
 
-        if(keys & J_LEFT)  scroll_sprite(0, -1, 0);
-        if(keys & J_RIGHT) scroll_sprite(0,  1, 0);
-        if(keys & J_UP)    scroll_sprite(0,  0, -1);
-        if(keys & J_DOWN)  scroll_sprite(0,  0,  1);
+        if (keys & J_UP)    last_input_movements = 1;
+        if (keys & J_DOWN)  last_input_movements = 2;
+        if (keys & J_LEFT)  last_input_movements = 3;
+        if (keys & J_RIGHT) last_input_movements = 4;
+
+        if (last_input_movements != 0) {
+            if ((keys & J_UP)    && (last_input_movements == 1)) scroll_sprite(0, 0, -1);
+            if ((keys & J_DOWN)  && (last_input_movements == 2)) scroll_sprite(0, 0,  1);
+            if ((keys & J_LEFT)  && (last_input_movements == 3)) scroll_sprite(0,-1,  0);
+            if ((keys & J_RIGHT) && (last_input_movements == 4)) scroll_sprite(0, 1,  0);
+        }
+
+        //if(keys & J_LEFT) scroll_sprite(0, -1, 0);
+        //if(keys & J_RIGHT) scroll_sprite(0,  1, 0);
+        //if(keys & J_UP)    scroll_sprite(0,  0, -1);
+        //if(keys & J_DOWN)  scroll_sprite(0,  0,  1);
 
         wait_vbl_done();
     }
