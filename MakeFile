@@ -1,0 +1,12 @@
+PROJECT = game
+
+SRC = src/main.c
+
+CC = lcc
+CFLAGS = -Wa-l -Wl-m
+
+all:
+	$(CC) $(CFLAGS) -o $(PROJECT).gb $(SRC)
+
+clean:
+	del *.gb *.ihx *.lst *.map *.sym
