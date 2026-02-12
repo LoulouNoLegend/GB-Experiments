@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": ".\\build.bat",
+            "group": {
+                "kind": "build",
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Run ROM",
+            "type": "shell",
+            "command": "bgbw64\\bgb64.exe game.gb",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build & Run",
+            "dependsOn": [
+                "Build",
+                "Run ROM"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

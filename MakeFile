@@ -1,12 +1,14 @@
-PROJECT = game
+ROM := game.gb
 
-SRC = src/main.c
+CC := lcc
+CFLAGS := -Wa-l -Wl-m -Iinclude -Isrc
 
-CC = lcc
-CFLAGS = -Wa-l -Wl-m
+SOURCES := $(wildcard src/*.c) $(wildcard src/sprites/*.c)
 
-all:
-	$(CC) $(CFLAGS) -o $(PROJECT).gb $(SRC)
+all: $(ROM)
+
+$(ROM): $(SOURCES)
+	$(CC) $(CFLAGS) -o $@ $(SOURCES)
 
 clean:
-	del *.gb *.ihx *.lst *.map *.sym
+	del /q $(ROM) 2>nul || exit 0
