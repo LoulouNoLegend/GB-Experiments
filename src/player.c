@@ -6,17 +6,22 @@
 #include "tile_sheet.h"
 #include "enemy.h"
 #include "main.h"
+#include "game.h"
 
 int8_t PlayerVelocity = 2;
 UBYTE PlayerPosition[2] = {80,72};
 UBYTE PlayerHealth = 3;
 
-void initPlayer(void) {
+void InitPlayer(void) {
     SPRITES_8x8;
 
     set_sprite_data(0, 1, Sprites_Player);
     set_sprite_tile(0, 0);
     move_sprite(0, 80, 72);
+}
+
+void PlayerLoop(void) {
+    HandlePlayerInput();
 }
 
 void HandlePlayerInput(void) {
@@ -34,16 +39,17 @@ void HandlePlayerInput(void) {
     }
 }
 
-void hitPlayer(void) {
+void PlayerHit(void) {
     PlayerHealth-1;
 
-    checkHealth();
+    CheckHealth();
 
     printf("Hit!");
 }
 
-void checkHealth(void) {
+void CheckHealth(void) {
     if (PlayerHealth <= 0) {
         printf("DEAD!");
+        EndGame();
     }
 }

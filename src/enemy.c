@@ -4,11 +4,12 @@
 #include "enemy.h"
 #include "player.h"
 #include "tile_sheet.h"
+#include "game.h"
 
 int8_t EnemyVelocity = 1;
 UBYTE EnemyPosition[2] = {40,36};
 
-void initEnemy(void) {
+void InitEnemy(void) {
     SPRITES_8x8;
 
     set_sprite_data(1, 1, Sprites_Enemy);
@@ -16,7 +17,11 @@ void initEnemy(void) {
     move_sprite(1, 100, 50);
 }
 
-void chasePlayer(void) {
+void EnemyLoop(void) {
+    ChasePlayer();
+}
+
+void ChasePlayer(void) {
     if (EnemyPosition[0] < PlayerPosition[0]) {
         EnemyPosition[0]+=EnemyVelocity;
     } else if (EnemyPosition[0] > PlayerPosition[0]) {
@@ -31,18 +36,13 @@ void chasePlayer(void) {
 
     move_sprite(1, EnemyPosition[0], EnemyPosition[1]);
 
-    checkPlayerPosition();
+    CheckPlayerPosition();
 }
 
-void checkPlayerPosition(void) {
-    UBYTE PosDiffX, PosDiffY;
+void CheckPlayerPosition(void) {
+    BOOLEAN playerTouched;
 
-    // Check the difference of position from the enemy and the player
-    PosDiffX = PlayerPosition[0] - EnemyPosition[0];
-    PosDiffY = PlayerPosition[1] - EnemyPosition[1];
+    playerTouched = ComparePosition(PlayerPosition, EnemyPosition, 5);
 
-    // If they are too close, get hit!!!!
-    if (PosDiffX < 1 && PosDiffY < 1) {
-        hitPlayer();
-    }
+    if (playerTouched == TRUE) PlayerHit();
 }

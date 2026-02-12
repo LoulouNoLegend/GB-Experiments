@@ -3,9 +3,9 @@
 
 extern UBYTE EnemyPosition[2];
 
-void initEnemy(void);
-void chasePlayer(void);
-void checkPlayerPosition(void);
-void hitPlayer(void);
+void InitEnemy(void);
+void EnemyLoop(void);
+void ChasePlayer(void);
+void CheckPlayerPosition(void);
 
 #endif

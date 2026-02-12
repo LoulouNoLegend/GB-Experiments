@@ -4,20 +4,22 @@
 #include "player.h"
 #include "enemy.h"
 
+BOOLEAN doGameLoop = TRUE;
+
 void main(void) {
     DISPLAY_OFF; // turn off screen, free VRAM / make changes safe
     SPRITES_8x8;
 
-    initPlayer();
-    initEnemy();
+    InitPlayer();
+    InitEnemy();
 
     SHOW_SPRITES;
     DISPLAY_ON;
 
-    while(1) {
-        HandlePlayerInput();
+    while(doGameLoop == TRUE) {
+        PlayerLoop();
 
-        chasePlayer();
+        EnemyLoop();
 
         wait_vbl_done();
     }

@@ -3,7 +3,11 @@
 
 extern UBYTE PlayerPosition[2];
 
-void initPlayer(void);
+void InitPlayer(void);
+void PlayerLoop(void);
 void HandlePlayerInput(void);
+
+void PlayerHit(void);
+void CheckHealth(void);
 
 #endif
