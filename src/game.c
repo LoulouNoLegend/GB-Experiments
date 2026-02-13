@@ -3,25 +3,20 @@
 #include "game.h"
 
 #include "menus.h"
-
-BOOLEAN doGameLoop = TRUE;
+#include "main.h"
 
 const unsigned char BlankTile[] = {
   0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00,
   0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00
 };
 
-void MainGameLoop(void) {
-    MainMenu();
-}
-
-void EndGame(void) {
-    doGameLoop = FALSE;
-}
-
 void ClearScreenBkg(void) {
-    HIDE_BKG;
     DISPLAY_OFF;
+
+    HIDE_BKG;
+
+    move_bkg(0, 0);
+    scroll_bkg(0, 0);
 
     fill_bkg_rect(0, 0, 32, 32, 0);
 

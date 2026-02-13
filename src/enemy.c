@@ -12,6 +12,9 @@ UBYTE EnemyPosition[2] = {40,36};
 void InitEnemy(void) {
     SPRITES_8x8;
 
+    EnemyVelocity = 1;
+    EnemyPosition[0] = 40, EnemyPosition[0] = 36;
+
     set_sprite_data(1, 1, Sprites_Enemy);
     set_sprite_tile(1, 1);
     move_sprite(1, 100, 50);

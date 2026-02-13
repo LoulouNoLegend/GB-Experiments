@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "menu_tile_sheet.h"
 #include "game.h"
+#include "main.h"
 
 /*---------------------------------------------*/
 
@@ -18,8 +19,6 @@
 #define BTN_PLAY_HOVER      (VRAM_BUTTONS + 4)  // 4..7
 #define BTN_SETTINGS        (VRAM_BUTTONS + 8)  // 8..11
 #define BTN_SETTINGS_HOVER  (VRAM_BUTTONS + 12) // 12..15
-
-BOOLEAN inMainMenu = TRUE, inPlayingState = FALSE;
 
 // Play = 0
 // Settings = 1
@@ -54,17 +53,6 @@ const unsigned char MM_Btn_Settings_Hover_Map[] = {
 };
 
 /*---------------------------------------------*/
-
-void MainMenu(void) {
-    DrawMainMenuUI();
-
-    while (inMainMenu == TRUE) {
-        HandleMenuInput();
-        vsync();
-    }
-    
-}
-
 void DrawMainMenuUI(void) {
     DISPLAY_OFF;
 
@@ -108,34 +96,42 @@ void HandleMenuInput(void) {
         delay(120); // anti-spam input
     }
 
-    if ((keys & (J_A | J_START))) {
+    if (keys & (J_A | J_START)) {
         if (selectedButton == 0) {
             inMainMenu = FALSE;
-            Playing();
-        } else {
-            // later that
+            g_state = STATE_PLAYING;
+            delay(150);
+            return;
         }
-        delay(150); // avoid double-trigger
     }
 }
 
-void Playing(void) {
+void StartGame(void) {
     DISPLAY_OFF;
-    ClearScreenBkg();
 
-    DISPLAY_ON;
+    // reset visuals
+    HIDE_BKG;
     SHOW_SPRITES;
     SPRITES_8x8;
+
+    move_bkg(0, 0);
+
+    // Clear OAM
+    for (UBYTE i = 0; i < 40; i++) move_sprite(i, 0, 0);
 
     InitPlayer();
     InitEnemy();
 
-    inPlayingState = TRUE;
+    DISPLAY_ON;
+}
 
-    while (inPlayingState == TRUE) {
-        PlayerLoop();
-        EnemyLoop();
-        
-        vsync();
-    }
+void EndGame(void) {
+    DISPLAY_OFF;
+
+    HIDE_SPRITES;
+    SHOW_BKG;
+    move_bkg(0, 0);
+    fill_bkg_rect(0, 0, 32, 32, 0);
+
+    DISPLAY_ON;
 }
