@@ -5,14 +5,14 @@
 
 void main(void) {
     DISPLAY_OFF; // turn off screen, free VRAM / make changes safe
-    SPRITES_8x8;
+    //SPRITES_8x8;
 
-    SHOW_SPRITES;
-    DISPLAY_ON;
+    //SHOW_SPRITES;
+    //DISPLAY_ON;
 
     while(1) {
         MainGameLoop();
 
-        wait_vbl_done();
+        vsync();
     }
 }

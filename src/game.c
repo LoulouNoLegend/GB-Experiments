@@ -1,16 +1,32 @@
-#include <string.h>
+#include <stdio.h>
+
 #include "game.h"
 
 #include "menus.h"
 
 BOOLEAN doGameLoop = TRUE;
 
-void MainGameLoop(void) {    
+const unsigned char BlankTile[] = {
+  0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00,
+  0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00
+};
+
+void MainGameLoop(void) {
     MainMenu();
 }
 
 void EndGame(void) {
     doGameLoop = FALSE;
+}
+
+void ClearScreen(void) {
+    HIDE_BKG;
+    DISPLAY_OFF;
+
+    fill_bkg_rect(0, 0, 32, 32, 0);
+
+    DISPLAY_ON;
+    SHOW_BKG;
 }
 
 /*

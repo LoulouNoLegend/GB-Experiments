@@ -6,6 +6,12 @@
 extern BOOLEAN inMainMenu;
 
 void MainMenu(void);
+
+void DrawMainMenuUI(void);
+
+void HandleMenuInput(void);
+void checkSelectedButton(void);
+
 void Playing(void);
 
 #endif
