@@ -19,7 +19,7 @@ void EndGame(void) {
     doGameLoop = FALSE;
 }
 
-void ClearScreen(void) {
+void ClearScreenBkg(void) {
     HIDE_BKG;
     DISPLAY_OFF;
 
