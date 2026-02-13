@@ -1,25 +1,17 @@
 #include <gb/gb.h>
 #include <stdint.h>
 
-#include "player.h"
-#include "enemy.h"
-
-BOOLEAN doGameLoop = TRUE;
+#include "game.h"
 
 void main(void) {
     DISPLAY_OFF; // turn off screen, free VRAM / make changes safe
     SPRITES_8x8;
 
-    InitPlayer();
-    InitEnemy();
-
     SHOW_SPRITES;
     DISPLAY_ON;
 
-    while(doGameLoop == TRUE) {
-        PlayerLoop();
-
-        EnemyLoop();
+    while(1) {
+        MainGameLoop();
 
         wait_vbl_done();
     }

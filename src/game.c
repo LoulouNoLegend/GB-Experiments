@@ -1,4 +1,13 @@
-#include "main.h"
+#include <string.h>
+#include "game.h"
+
+#include "menus.h"
+
+BOOLEAN doGameLoop = TRUE;
+
+void MainGameLoop(void) {    
+    MainMenu();
+}
 
 void EndGame(void) {
     doGameLoop = FALSE;
