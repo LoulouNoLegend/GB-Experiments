@@ -6,9 +6,9 @@ void EndGame(void) {
 
 /*
  * Compare the position between two. (Ex: Entities)
- * - Position 1: First Position
- * - Position 2: Second Position
- * - Distance: The distance between the two positions that would return true
+ * - Position 1:    First Position
+ * - Position 2:    Second Position
+ * - Distance:      The distance between the two positions that would return true
 */
 BOOLEAN ComparePosition(UBYTE position1[2], UBYTE position2[2], UBYTE distance) {
     UBYTE PosDiffX, PosDiffY;

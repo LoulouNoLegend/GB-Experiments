@@ -40,11 +40,8 @@ void HandlePlayerInput(void) {
 }
 
 void PlayerHit(void) {
-    PlayerHealth-1;
-
+    PlayerHealth-=1;
     CheckHealth();
-
-    printf("Hit!");
 }
 
 void CheckHealth(void) {
@@ -52,4 +49,5 @@ void CheckHealth(void) {
         printf("DEAD!");
         EndGame();
     }
+    else printf("Hit!");
 }
